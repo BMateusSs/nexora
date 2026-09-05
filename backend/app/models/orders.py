@@ -11,6 +11,7 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from app.models.users import User
+    from app.models.order_items import OrderItem
     
 class StatusType(str, Enum):
     PENDING='PENDING'
@@ -57,4 +58,11 @@ class Order(Base):
         onupdate=text('NOW()')
     )
     
-    user: Mapped['User'] = relationship(back_populates='orders')
+    user: Mapped["User"] = relationship(
+        back_populates="orders"
+    )
+
+    items: Mapped[list["OrderItem"]] = relationship(
+        back_populates="order",
+        cascade="all, delete-orphan"
+    )

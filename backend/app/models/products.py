@@ -16,6 +16,7 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from app.models.categories import Category
+    from app.models.order_items import OrderItem
 
 class Product(Base):
     __tablename__ = 'products'
@@ -74,6 +75,11 @@ class Product(Base):
         onupdate=text("NOW()"),
     )
     
-    category: Mapped['Category'] = relationship(back_populates='products')
-    
+    category: Mapped["Category"] = relationship(
+        back_populates="products"
+    )
+
+    order_items: Mapped[list["OrderItem"]] = relationship(
+        back_populates="product"
+    )
     
