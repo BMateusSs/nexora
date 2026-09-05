@@ -1,5 +1,6 @@
 from datetime import datetime
 from uuid import UUID
+from decimal import Decimal
 
 from sqlalchemy import text, UUID as SQLAlchemyUUID, Integer, DECIMAL, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -38,12 +39,12 @@ class OrderItem(Base):
         nullable=False
     )
 
-    unit_price: Mapped[float] = mapped_column(
+    unit_price: Mapped[Decimal] = mapped_column(
         DECIMAL(10, 2),
         nullable=False
     )
 
-    subtotal: Mapped[float] = mapped_column(
+    subtotal: Mapped[Decimal] = mapped_column(
         DECIMAL(10, 2),
         nullable=False
     )
