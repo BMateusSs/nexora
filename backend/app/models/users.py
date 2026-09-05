@@ -1,5 +1,5 @@
 from sqlalchemy import String, Text, text, DateTime
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from datetime import datetime
 from uuid import UUID
 from sqlalchemy import UUID as SQLAlchemyUUID
@@ -7,6 +7,11 @@ from enum import Enum
 from sqlalchemy import Enum as SQLAlchemyEnum
 
 from app.core.database import Base
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from app.models.orders import Order
 
 class Role(str, Enum):
     CUSTOMER = "CUSTOMER"
@@ -47,4 +52,6 @@ class User(Base):
         DateTime(timezone=True), 
         server_default=text("CURRENT_TIMESTAMP")
     )
+    
+    orders: Mapped[list['Order']] = relationship(back_populates='user')
     
